@@ -157,6 +157,8 @@ def main(website_directory:str='./NTCCTMCR/',
     domain_name=domain_name_str
     base_url=base_url_str
     filename_length_limit=int(filename_length_limit_str)
+    original_directory=os.getcwd()
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     load_component_map()
     load_content_database()
     generate_entries(entries_filepath,website_directory)
@@ -165,6 +167,7 @@ def main(website_directory:str='./NTCCTMCR/',
     generate_pages(pages_directory,website_directory)
     generate_sitemap(website_directory)
     write_content_database(website_directory)
+    os.chdir(original_directory)
 if '__main__'==__name__:
     import sys
     if 8==len(sys.argv):
