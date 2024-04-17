@@ -1,4 +1,6 @@
 component_id,component_file
+domain_name,
+base_url,
 header,header.html
 navigation,navigation.html
 description,
