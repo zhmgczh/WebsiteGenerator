@@ -70,10 +70,10 @@ def generate_entries(filepath:str,website_directory:str):
             category_index=row.index('category')
         else:
             article=article_template
-            article=replace_tag(article,'description',row[excerpt_index])
-            article=replace_tag(article,'article_category',row[category_index])
-            article=replace_tag(article,'article_title',row[title_index])
-            article=replace_tag(article,'article_post',row[content_index])
+            article=replace_tag(article,'<!--|||||description|||||-->',row[excerpt_index])
+            article=replace_tag(article,'<!--|||||article_category|||||-->',row[category_index])
+            article=replace_tag(article,'<!--|||||article_title|||||-->',row[title_index])
+            article=replace_tag(article,'<!--|||||article_post|||||-->',row[content_index])
             article=replace_all_components(article)
             title=row[title_index]
             if len(title)>filename_length_limit:
@@ -114,10 +114,10 @@ def generate_articles(directory:str,website_directory:str):
                         cleantext=BeautifulSoup(post_content,'lxml').text.replace('\n\n','\n')
                         title=article[:-len('.html')]
                         post=article_template
-                        post=replace_tag(post,'description',cleantext)
-                        post=replace_tag(post,'article_category',category)
-                        post=replace_tag(post,'article_title',title)
-                        post=replace_tag(post,'article_post',post_content)
+                        post=replace_tag(post,'<!--|||||description|||||-->',cleantext)
+                        post=replace_tag(post,'<!--|||||article_category|||||-->',category)
+                        post=replace_tag(post,'<!--|||||article_title|||||-->',title)
+                        post=replace_tag(post,'<!--|||||article_post|||||-->',post_content)
                         post=replace_all_components(post)
                         truncated_title=title
                         if len(truncated_title)>filename_length_limit:
