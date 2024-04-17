@@ -1,5 +1,6 @@
 import os,csv,hashlib,pickle,json
 from bs4 import BeautifulSoup
+from urllib.parse import quote
 hash_value=hashlib.new('sha256')
 content_database={}
 category_database={}
@@ -43,8 +44,7 @@ def replace_all_components(article:str):
     while True:
         article_backup=article
         for component in component_map:
-            if ''!=component_map[component]:
-                article=replace_tag(article,component,component_map[component])
+            article=replace_tag(article,component,component_map[component])
         if article_backup==article:
             break
     return article
@@ -77,11 +77,14 @@ def generate_entries(filepath:str,website_directory:str):
             article=article_template
             article=replace_tag(article,'<!--|||||description|||||-->',row[excerpt_index])
             article=replace_tag(article,'<!--|||||article_category|||||-->',row[category_index])
+            article=replace_tag(article,'<!--|||||article_category_encoded|||||-->',quote(row[category_index]))
             article=replace_tag(article,'<!--|||||article_title|||||-->',row[title_index])
             article=replace_tag(article,'<!--|||||article_post|||||-->',row[content_index])
             article=replace_all_components(article)
             title=truncate(row[title_index])
-            url='/'+title+'/'
+            url=quote('/'+row[category_index]+'/'+title+'/')
+            article=replace_tag(article,'<!--|||||link_url|||||-->',url)
+            article=replace_tag(article,'<!--|||||full_url|||||-->',base_url+url)
             hash_value.update(article.encode())
             if url not in content_database or content_database[url]!=hash_value.hexdigest():
                 make_directory(title)
@@ -119,11 +122,14 @@ def generate_articles(directory:str,website_directory:str):
                         post=article_template
                         post=replace_tag(post,'<!--|||||description|||||-->',cleantext)
                         post=replace_tag(post,'<!--|||||article_category|||||-->',category)
+                        post=replace_tag(post,'<!--|||||article_category_encoded|||||-->',quote(category))
                         post=replace_tag(post,'<!--|||||article_title|||||-->',title)
                         post=replace_tag(post,'<!--|||||article_post|||||-->',post_content)
                         post=replace_all_components(post)
                         truncated_title=truncate(title)
-                        url='/'+truncated_title+'/'
+                        url=quote('/'+category+'/'+truncated_title+'/')
+                        post=replace_tag(post,'<!--|||||link_url|||||-->',url)
+                        post=replace_tag(post,'<!--|||||full_url|||||-->',base_url+url)
                         hash_value.update(post.encode())
                         if url not in content_database or content_database[url]!=hash_value.hexdigest():
                             make_directory(truncated_title)
@@ -152,7 +158,7 @@ def main(website_directory:str='./NTCCTMCR/',
          articles_directory:str='../WordPress/articles',
          pages_directory:str='../WordPress/pages',
          domain_name_str:str='www.zh-tw.top',
-         base_url_str:str='https://www.zh-tw.top',
+         base_url_str:str='http://127.0.0.1:8000',
          filename_length_limit_str:int=22):
     global domain_name,base_url,filename_length_limit
     domain_name=domain_name_str
