@@ -37,7 +37,7 @@ def make_directory(name:str):
     if not os.path.isdir(name):
         os.makedirs(name)
 def replace_tag(article:str,tag:str,replacement:str):
-    return article.replace('<!--|||||'+tag+'|||||-->',replacement)
+    return article.replace(tag,replacement)
 def replace_all_components(article:str):
     global component_map
     while True:
