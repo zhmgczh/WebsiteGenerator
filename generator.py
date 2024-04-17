@@ -51,7 +51,7 @@ def replace_all_components(article:str):
 def truncate(title:str):
     global filename_length_limit
     if len(title)>filename_length_limit:
-        title=title[:-filename_length_limit]
+        title=title[:filename_length_limit]
     return title
 def generate_entries(filepath:str,website_directory:str):
     global content_database
