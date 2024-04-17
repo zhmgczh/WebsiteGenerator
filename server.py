@@ -1,6 +1,6 @@
 import os,sys,http.server,webbrowser
 from http.server import SimpleHTTPRequestHandler
-def main(port:int=8000,address:str='.'):
+def main(port:int=8000,address:str='./NTCCTMCR/'):
     os.chdir(address)
     HandlerClass=SimpleHTTPRequestHandler
     ServerClass=http.server.HTTPServer
