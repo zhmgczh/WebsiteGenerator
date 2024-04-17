@@ -2,6 +2,7 @@ component_id,component_file
 <!--|||||domain_name|||||-->,
 <!--|||||base_url|||||-->,
 <!--|||||link_url|||||-->,
+<!--|||||link_url_encoded|||||-->,
 <!--|||||full_url|||||-->,
 <!--|||||header|||||-->,header.html
 <!--|||||navigation|||||-->,navigation.html
