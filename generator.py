@@ -89,11 +89,11 @@ def generate_entries(filepath:str,website_directory:str):
                                        'title':row[title_index],
                                        'description':row[excerpt_index],
                                        'hash_value':hash_value.hexdigest()}
-                if row[category_index] not in category_database:
-                    category_database[row[category_index]]=[]
-                category_database[row[category_index]].append({'url':url,
-                                                               'title':row[title_index],
-                                                               'description':row[excerpt_index]})
+            if row[category_index] not in category_database:
+                category_database[row[category_index]]=[]
+            category_database[row[category_index]].append({'url':url,
+                                                           'title':row[title_index],
+                                                           'description':row[excerpt_index]})
     os.chdir(original_directory)
 def generate_articles(directory:str,website_directory:str):
     global content_database
@@ -133,11 +133,11 @@ def generate_articles(directory:str,website_directory:str):
                                                    'title':title,
                                                    'description':cleantext,
                                                    'hash_value':hash_value.hexdigest()}
-                            if category not in category_database:
-                                category_database[category]=[]
-                            category_database[category].append({'url':url,
-                                                                'title':title,
-                                                                'description':cleantext})
+                        if category not in category_database:
+                            category_database[category]=[]
+                        category_database[category].append({'url':url,
+                                                            'title':title,
+                                                            'description':cleantext})
             os.chdir('..')
     os.chdir(original_directory)
 def generate_categories(website_directory:str):
