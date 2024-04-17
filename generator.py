@@ -48,6 +48,11 @@ def replace_all_components(article:str):
         if article_backup==article:
             break
     return article
+def truncate(title:str):
+    global filename_length_limit
+    if len(title)>filename_length_limit:
+        title=title[:-filename_length_limit]
+    return title
 def generate_entries(filepath:str,website_directory:str):
     global content_database
     with open('./article.html',mode='r',encoding='utf-8') as file:
@@ -75,14 +80,12 @@ def generate_entries(filepath:str,website_directory:str):
             article=replace_tag(article,'<!--|||||article_title|||||-->',row[title_index])
             article=replace_tag(article,'<!--|||||article_post|||||-->',row[content_index])
             article=replace_all_components(article)
-            title=row[title_index]
-            if len(title)>filename_length_limit:
-                title=title[:-filename_length_limit]
-            url='/'+row[title_index]+'/'
+            title=truncate(row[title_index])
+            url='/'+title+'/'
             hash_value.update(article.encode())
             if url not in content_database or content_database[url]!=hash_value.hexdigest():
-                make_directory(row[title_index])
-                with open('./'+row[title_index]+'/index.html',mode='w',encoding='utf-8') as file:
+                make_directory(title)
+                with open('./'+title+'/index.html',mode='w',encoding='utf-8') as file:
                     file.write(article)
                 content_database[url]={'type':'article',
                                        'category':row[category_index],
@@ -119,9 +122,7 @@ def generate_articles(directory:str,website_directory:str):
                         post=replace_tag(post,'<!--|||||article_title|||||-->',title)
                         post=replace_tag(post,'<!--|||||article_post|||||-->',post_content)
                         post=replace_all_components(post)
-                        truncated_title=title
-                        if len(truncated_title)>filename_length_limit:
-                            truncated_title=truncated_title[:filename_length_limit]
+                        truncated_title=truncate(title)
                         url='/'+truncated_title+'/'
                         hash_value.update(post.encode())
                         if url not in content_database or content_database[url]!=hash_value.hexdigest():
