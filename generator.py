@@ -195,9 +195,9 @@ def generate_pages(directory:str,website_directory:str):
                     if 'index'==alias[title]:
                         truncated_title=''
                     else:
-                        truncated_title=truncate(alias[title])
+                        truncated_title=alias[title]#truncate(alias[title])
                 else:
-                    truncated_title=truncate(title)
+                    truncated_title=title#truncate(title)
                 if page in page_components:
                     for tag in page_components[page]:
                         post=replace_tag(post,tag,page_components[page][tag])
@@ -215,6 +215,8 @@ def generate_pages(directory:str,website_directory:str):
                                            'description':cleantext,
                                            'hash_value':hash_value.hexdigest()}
     os.chdir(original_directory)
+def generate_404(website_directory:str):
+    pass
 def generate_sitemap(website_directory:str):
     pass
 def main(website_directory:str='./NTCCTMCR/',
@@ -236,6 +238,7 @@ def main(website_directory:str='./NTCCTMCR/',
     generate_articles(articles_directory,website_directory)
     generate_categories(website_directory)
     generate_pages(pages_directory,website_directory)
+    generate_404(website_directory)
     generate_sitemap(website_directory)
     write_content_database(website_directory)
     os.chdir(original_directory)
