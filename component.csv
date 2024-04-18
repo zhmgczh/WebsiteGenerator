@@ -20,3 +20,4 @@ component_id,component_file
 <!--|||||respond|||||-->,respond.html
 <!--|||||sidebar|||||-->,sidebar.html
 <!--|||||footer|||||-->,footer.html
+<!--|||||before_closing_body|||||-->,before_closing_body.html
