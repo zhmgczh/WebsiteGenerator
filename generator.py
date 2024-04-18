@@ -32,7 +32,7 @@ def load_component_map():
                 file_index=row.index('component_file')
             else:
                 if ''!=row[file_index]:
-                    with open('./components/'+row[file_index],mode='r',encoding='utf-8') as file:
+                    with open(os.path.join('./components/',row[file_index]),mode='r',encoding='utf-8') as file:
                         component_map[row[id_index]]=file.read()
 def make_directory(name:str):
     if not os.path.isdir(name):
