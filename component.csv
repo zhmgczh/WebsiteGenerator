@@ -22,3 +22,4 @@ component_id,component_file
 <!--|||||sidebar|||||-->,sidebar.html
 <!--|||||footer|||||-->,footer.html
 <!--|||||before_closing_body|||||-->,before_closing_body.html
+/wp-content/themes/rowling/DataTables-1.10.21/,DataTables_address.txt
