@@ -82,13 +82,13 @@ def generate_entries(filepath:str,website_directory:str):
             article=replace_tag(article,'<!--|||||article_post|||||-->',row[content_index])
             article=replace_all_components(article)
             title=truncate(row[title_index])
-            url=quote('/'+row[category_index]+'/'+title+'/')
+            url=quote(os.path.join('/',row[category_index],title)+'/')
             article=replace_tag(article,'<!--|||||link_url|||||-->',url)
             article=replace_tag(article,'<!--|||||full_url|||||-->',base_url+url)
             hash_value.update(article.encode())
             if url not in content_database or content_database[url]!=hash_value.hexdigest():
                 make_directory(title)
-                with open('./'+title+'/index.html',mode='w',encoding='utf-8') as file:
+                with open(os.path.join('./',title,'index.html'),mode='w',encoding='utf-8') as file:
                     file.write(article)
                 content_database[url]={'type':'article',
                                        'category':row[category_index],
@@ -127,13 +127,13 @@ def generate_articles(directory:str,website_directory:str):
                         post=replace_tag(post,'<!--|||||article_post|||||-->',post_content)
                         post=replace_all_components(post)
                         truncated_title=truncate(title)
-                        url=quote('/'+category+'/'+truncated_title+'/')
+                        url=quote(os.path.join('/',category,truncated_title)+'/')
                         post=replace_tag(post,'<!--|||||link_url|||||-->',url)
                         post=replace_tag(post,'<!--|||||full_url|||||-->',base_url+url)
                         hash_value.update(post.encode())
                         if url not in content_database or content_database[url]!=hash_value.hexdigest():
                             make_directory(truncated_title)
-                            with open('./'+truncated_title+'/index.html',mode='w',encoding='utf-8') as file:
+                            with open(os.path.join('./',truncated_title,'index.html'),mode='w',encoding='utf-8') as file:
                                 file.write(post)
                             content_database[url]={'type':'article',
                                                    'category':category,
@@ -150,7 +150,71 @@ def generate_articles(directory:str,website_directory:str):
 def generate_categories(website_directory:str):
     pass
 def generate_pages(directory:str,website_directory:str):
-    pass
+    global content_database
+    original_directory=os.getcwd()
+    with open(os.path.join(original_directory,directory,'alias.csv'),mode='r',encoding='utf-8') as csv_file:
+        csv_reader=csv.reader(csv_file)
+        alias={}
+        title_index=alias_index=-1
+        for row in csv_reader:
+            if -1 in(title_index,alias_index):
+                title_index=row.index('page_title')
+                alias_index=row.index('alias')
+            else:
+                alias[row[title_index]]=row[alias_index]
+    with open(os.path.join(original_directory,directory,'page_components.csv'),mode='r',encoding='utf-8') as csv_file:
+        csv_reader=csv.reader(csv_file)
+        page_components={}
+        father_index=tag_index=child_index=-1
+        for row in csv_reader:
+            if -1 in(father_index,tag_index,child_index):
+                father_index=row.index('father')
+                tag_index=row.index('tag')
+                child_index=row.index('child')
+            else:
+                if row[father_index] not in page_components:
+                    page_components[row[father_index]]={}
+                with open(os.path.join(original_directory,directory,row[child_index]),mode='r',encoding='utf-8') as file:
+                    page_components[row[father_index]][row[tag_index]]=file.read()
+    with open('./page.html',mode='r',encoding='utf-8') as file:
+        page_template=file.read()
+    os.chdir(website_directory)
+    pages=os.listdir(os.path.join(original_directory,directory))
+    for page in pages:
+        if page.endswith('.html'):
+            with open(os.path.join(original_directory,directory,page),mode='r',encoding='utf-8') as file:
+                post_content=file.read()
+                cleantext=BeautifulSoup(post_content,'lxml').text.replace('\n\n','\n')
+                title=page[:-len('.html')]
+                post=page_template
+                post=replace_tag(post,'<!--|||||description|||||-->',cleantext)
+                post=replace_tag(post,'<!--|||||page_title|||||-->',title)
+                post=replace_tag(post,'<!--|||||page_post|||||-->',post_content)
+                post=replace_all_components(post)
+                if title in alias:
+                    if 'index'==alias[title]:
+                        truncated_title=''
+                    else:
+                        truncated_title=truncate(alias[title])
+                else:
+                    truncated_title=truncate(title)
+                if page in page_components:
+                    for tag in page_components[page]:
+                        post=replace_tag(post,tag,page_components[page][tag])
+                url=quote(os.path.join('/',truncated_title)+'/').replace('//','/')
+                post=replace_tag(post,'<!--|||||link_url|||||-->',url)
+                post=replace_tag(post,'<!--|||||full_url|||||-->',base_url+url)
+                hash_value.update(post.encode())
+                if url not in content_database or content_database[url]!=hash_value.hexdigest():
+                    if ''!=truncated_title:
+                        make_directory(truncated_title)
+                    with open(os.path.join('./',truncated_title,'index.html'),mode='w',encoding='utf-8') as file:
+                        file.write(post)
+                    content_database[url]={'type':'page',
+                                           'title':title,
+                                           'description':cleantext,
+                                           'hash_value':hash_value.hexdigest()}
+    os.chdir(original_directory)
 def generate_sitemap(website_directory:str):
     pass
 def main(website_directory:str='./NTCCTMCR/',
