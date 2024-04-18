@@ -2,5 +2,26 @@
     <span class="fa fw fa-comment"></span>0
     <span class="resp"> 則留言</span>
 </a> -->
-<a href="#disqus_thread">查看留言</a>
+<a id="count_comments" href="#disqus_thread" style="display:none;">查看留言</a>
+<script>
+    var base_url=window.location.protocol+'//'+window.location.hostname+(window.location.port?':'+window.location.port:'')+'/';
+    var original_url=window.location.href;
+    var new_url=original_url.replace(base_url,'<!--|||||main_base_url|||||-->').split('#')[0].split('?')[0].toLowerCase();
+    var count_comments=document.getElementById('count_comments');
+    count_comments.setAttribute('href',new_url+'#disqus_thread');
+    function check()
+    {
+        if('查看留言'!=count_comments.innerHTML)
+        {
+            var display_comments=document.getElementById('display_comments');
+            display_comments.innerHTML=count_comments.innerHTML;
+        }
+        else
+        {
+            setTimeout(check,200);
+        }
+    }
+    check()
+</script>
+<a id="display_comments" href="#disqus_thread">查看留言</a>
 <script id="dsq-count-scr" src="//ntcctmcr.disqus.com/count.js" async></script>

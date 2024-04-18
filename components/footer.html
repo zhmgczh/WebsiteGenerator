@@ -4,19 +4,19 @@
 </a>
 <p class="copyright" style="text-align:center;">© <span id="year"></span> <a href="/" rel="home">大陸居民臺灣正體字講義</a></p>
 <script>
-    const current_year=new Date().getFullYear();
-    const year=document.getElementById('year');
+    var current_year=new Date().getFullYear();
+    var year=document.getElementById('year');
     year.innerHTML='民國'+(current_year-1911)+'年（西元'+current_year+'）'
 </script>
 <p style="font-size:13.5px;text-align:center;">
     All rights have been waived by the editors. The website is dedicated to the public domain.<br/>
     <a href="/copyright-and-disclaimer-%e7%89%88%e6%ac%8a%e5%92%8c%e5%85%8d%e8%b2%ac%e8%81%b2%e6%98%8e/">Copyright and Disclaimer (版權和免責聲明)</a>
 </p>
-<p style="font-size:13.5px;color:red;text-align:center;">（注意這裡是《大陸居民臺灣正體字講義》的靜態備用站點，您可以<a id="dynamic" href="https://www.zh-tw.top/" target="_blank">點擊這裡</a>訪問本站動態站點之對應頁面）</p>
+<p style="font-size:13.5px;color:red;text-align:center;">（注意這裡是《大陸居民臺灣正體字講義》的靜態備用站點，您可以<a id="dynamic" href="<!--|||||main_base_url|||||-->" target="_blank">點擊這裡</a>訪問本站動態站點之對應頁面）</p>
 <script>
-        const base_url=window.location.protocol+'//'+window.location.hostname+(window.location.port?':'+window.location.port:'')+'/';
+        var base_url=window.location.protocol+'//'+window.location.hostname+(window.location.port?':'+window.location.port:'')+'/';
         var original_url=window.location.href;
-        var new_url=original_url.replace(base_url,'https://www.zh-tw.top/').split('#')[0].split('?')[0].toLowerCase();
+        var new_url=original_url.replace(base_url,'<!--|||||main_base_url|||||-->').split('#')[0].split('?')[0].toLowerCase();
         var dynamic=document.getElementById('dynamic');
-        dynamic.setAttribute('href',new_url)
+        dynamic.setAttribute('href',new_url);
 </script>
