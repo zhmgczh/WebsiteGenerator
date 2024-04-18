@@ -48,6 +48,10 @@ def replace_all_components(article:str):
         if article_backup==article:
             break
     return article
+def remove_double_newline_and_truncate(article:str):
+    while -1!=article.find('\n\n'):
+        article=article.replace('\n\n','\n')
+    return article.strip()
 def truncate(title:str):
     global filename_length_limit
     if len(title)>filename_length_limit:
@@ -117,7 +121,7 @@ def generate_articles(directory:str,website_directory:str):
                 if article.endswith('.html'):
                     with open(os.path.join(original_directory,directory,category,article),mode='r',encoding='utf-8') as file:
                         post_content=file.read()
-                        cleantext=BeautifulSoup(post_content,'lxml').text.replace('\n\n','\n')
+                        cleantext=remove_double_newline_and_truncate(BeautifulSoup(post_content,'lxml').text)
                         title=article[:-len('.html')]
                         post=article_template
                         post=replace_tag(post,'<!--|||||description|||||-->',cleantext)
@@ -184,7 +188,7 @@ def generate_pages(directory:str,website_directory:str):
         if page.endswith('.html'):
             with open(os.path.join(original_directory,directory,page),mode='r',encoding='utf-8') as file:
                 post_content=file.read()
-                cleantext=BeautifulSoup(post_content,'lxml').text.replace('\n\n','\n')
+                cleantext=remove_double_newline_and_truncate(BeautifulSoup(post_content,'lxml').text)
                 title=page[:-len('.html')]
                 post=page_template
                 post=replace_tag(post,'<!--|||||description|||||-->',cleantext)
