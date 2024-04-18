@@ -1,8 +1,8 @@
-<div id="respond" class="comment-respond">
+<!--<div id="respond" class="comment-respond">
     <h3 id="reply-title" class="comment-reply-title"><span class="fa fw fa-pencil"></span>發佈留言 <small><a rel="nofollow"
                 id="cancel-comment-reply-link" href="#respond"
                 style="display:none;">取消回覆</a></small></h3>
-    <form action="/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+    <form action="https://www.zh-tw.top/wp-comments-post.php" method="post" id="commentform" class="comment-form">
         <p class="comment-form-comment"><label for="comment">留言<span class="required">*</span></label><textarea
                 id="comment" name="comment" cols="45" rows="6" required=""></textarea></p>
         <p class="comment-form-author"><label for="author">顯示名稱 <span class="required">*</span></label> <input
@@ -21,4 +21,35 @@
             <input type="hidden" name="comment_parent" id="comment_parent" value="0">
         </p>
     </form>
-</div><!-- #respond -->
+</div>--><!-- #respond -->
+<!-- <p style="color:red;">注意這裡是《大陸居民臺灣正體字講義》的靜態備用站點，不顯示任何留言，如須顯示留言請<a id="dynamic" href="https://www.zh-tw.top/" target="_blank">點擊這裡</a>訪問本站之動態站點。</p>
+<script>
+        const base_url=window.location.protocol+'//'+window.location.hostname+(window.location.port?':'+window.location.port:'')+'/';
+        var original_url=window.location.href;
+        var new_url=original_url.replace(base_url,'https://www.zh-tw.top/');
+        var dynamic=document.getElementById('dynamic');
+        dynamic.setAttribute('href',new_url)
+</script> -->
+<div id="respond" class="comment-respond">
+        <div id="disqus_thread"></div>
+</div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    var disqus_config = function () {
+        const base_url=window.location.protocol+'//'+window.location.hostname+(window.location.port?':'+window.location.port:'')+'/';
+        var original_url=window.location.href;
+        var new_url=original_url.replace(base_url,'https://www.zh-tw.top/').split('#')[0].split('?')[0];
+        this.page.url = new_url;  // Replace PAGE_URL with your page's canonical URL variable
+        console.log(this.page.url);
+        //this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://ntcctmcr.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
