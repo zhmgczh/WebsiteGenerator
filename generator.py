@@ -294,7 +294,7 @@ def generate_sitemap(website_directory:str):
     urls=[base_url+url for url in content_database.keys()]
     xml_data="""<?xml version='1.0' encoding='UTF-8'?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">"""
     for url in urls:
-        xml_data+='<url><loc>'+base_url+url+'</loc></url>'
+        xml_data+='<url><loc>'+url+'</loc></url>'
     xml_data+='</urlset>'
     os.chdir(website_directory)
     with open('./sitemap.xml',mode='w',encoding='utf-8') as file:
