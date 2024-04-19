@@ -33,12 +33,12 @@
     }
     else if (-1 != new_url.indexOf('/search/')) {
         var page = get_query_variable('page');
-        var search_keyword = get_query_variable('s');
+        var search_keyword_1 = get_query_variable('s');
         if ('' == page) {
-            new_url = '<!--|||||main_base_url|||||-->?s=' + search_keyword;
+            new_url = '<!--|||||main_base_url|||||-->?s=' + search_keyword_1;
         }
         else {
-            new_url = '<!--|||||main_base_url|||||-->page/' + page + '/?s=' + search_keyword;
+            new_url = '<!--|||||main_base_url|||||-->page/' + page + '/?s=' + search_keyword_1;
         }
     }
     var dynamic = document.getElementById('dynamic');
