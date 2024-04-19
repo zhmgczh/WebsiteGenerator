@@ -5,25 +5,22 @@
 <a name="count_comments" href="#disqus_thread" style="display:none;">查看留言</a>
 <a name="display_comments" href="#disqus_thread"><span class="fa fw fa-comment"></span>查看留言</a>
 <script>
-    var base_url=window.location.protocol+'//'+window.location.hostname+(window.location.port?':'+window.location.port:'')+'/';
-    var original_url=window.location.href;
-    var new_url=original_url.replace(base_url,'<!--|||||main_base_url|||||-->').split('#')[0].split('?')[0].toLowerCase();
-    var script_tag=document.getElementsByTagName('script');
-	script_tag=script_tag[script_tag.length-1];
-	var parent=script_tag.parentNode;
-	var count_comments=parent.getElementsByTagName('a')[0];
-    count_comments.setAttribute('href',new_url+'#disqus_thread');
-	var display_comments=parent.getElementsByTagName('a')[1];
-    function check(count_comments,display_comments)
-    {
-        if('查看留言'!=count_comments.innerHTML)
-        {
-            display_comments.innerHTML=display_comments.innerHTML.replace('查看留言',count_comments.innerHTML);
+    var base_url = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/';
+    var original_url = window.location.href;
+    var new_url = original_url.replace(base_url, '<!--|||||main_base_url|||||-->').split('#')[0].split('?')[0].toLowerCase();
+    var script_tag = document.getElementsByTagName('script');
+    script_tag = script_tag[script_tag.length - 1];
+    var parent = script_tag.parentNode;
+    var count_comments = parent.getElementsByTagName('a')[0];
+    count_comments.setAttribute('href', new_url + '#disqus_thread');
+    var display_comments = parent.getElementsByTagName('a')[1];
+    function check(count_comments, display_comments) {
+        if ('查看留言' != count_comments.innerHTML) {
+            display_comments.innerHTML = display_comments.innerHTML.replace('查看留言', count_comments.innerHTML);
         }
-        else
-        {
-            setTimeout(()=>check(count_comments,display_comments),200);
+        else {
+            setTimeout(() => check(count_comments, display_comments), 200);
         }
     }
-    check(count_comments,display_comments);
+    check(count_comments, display_comments);
 </script>
