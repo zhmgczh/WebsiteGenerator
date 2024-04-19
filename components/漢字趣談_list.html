@@ -75,18 +75,18 @@
         var indices = get_random_subarray(keys, n);
         var hanziqutan_container = document.getElementById('hanziqutan_container');
         var hanziqutan_sample = document.getElementById('hanziqutan_sample');
-        elements = []
+        elements = [];
         for (var i = 0; i < n; ++i) {
-            var new_element = hanziqutan_sample.outerHTML.replace(' id="hanziqutan_sample" style="display:none;"', '');
-            new_element = new_element.replace('|||||tag|||||', tag);
-            new_element = new_element.replace('|||||quote_tag|||||', encodeURIComponent(tag)).toLowerCase();
-            new_element = new_element.replace('|||||url|||||', data[tag][indices[i]]['url']);
-            new_element = new_element.replace('|||||title|||||', data[tag][indices[i]]['title']);
+            var new_element = hanziqutan_sample.outerHTML.replaceAll(' id="hanziqutan_sample" style="display:none;"', '');
+            new_element = new_element.replaceAll('|||||tag|||||', tag);
+            new_element = new_element.replaceAll('|||||quote_tag|||||', encodeURIComponent(tag)).toLowerCase();
+            new_element = new_element.replaceAll('|||||url|||||', data[tag][indices[i]]['url']);
+            new_element = new_element.replaceAll('|||||title|||||', data[tag][indices[i]]['title']);
             var description = data[tag][indices[i]]['description'];
             if (100 < description.length) {
                 description = description.substr(0, 100) + '…';
             }
-            new_element = new_element.replace('|||||description|||||', description)
+            new_element = new_element.replaceAll('|||||description|||||', description)
             elements[i] = new_element;
         }
         elements[n] = hanziqutan_sample.outerHTML;

@@ -79,16 +79,17 @@ def generate_entries(filepath:str,website_directory:str):
             category_index=row.index('category')
         else:
             article=article_template
+            article=replace_all_components(article)
             article=replace_tag(article,'<!--|||||description|||||-->',row[excerpt_index])
             article=replace_tag(article,'<!--|||||article_category|||||-->',row[category_index])
             article=replace_tag(article,'<!--|||||article_category_encoded|||||-->',quote(row[category_index]))
             article=replace_tag(article,'<!--|||||article_title|||||-->',row[title_index])
             article=replace_tag(article,'<!--|||||article_post|||||-->',row[content_index])
-            article=replace_all_components(article)
             title=truncate(row[title_index])
             url=replace_all_components(quote(os.path.join('/',row[category_index],title)+'/').replace('//','/').lower())
             article=replace_tag(article,'<!--|||||link_url|||||-->',url)
             article=replace_tag(article,'<!--|||||full_url|||||-->',base_url+url)
+            article=replace_all_components(article)
             hash_value.update(article.encode())
             if url not in content_database or content_database[url]['hash_value']!=hash_value.hexdigest():
                 make_directory(title)
@@ -124,16 +125,17 @@ def generate_articles(directory:str,website_directory:str):
                         cleantext=remove_double_newline_and_truncate(BeautifulSoup(post_content,'lxml').text)
                         title=article[:-len('.html')]
                         post=article_template
+                        post=replace_all_components(post)
                         post=replace_tag(post,'<!--|||||description|||||-->',cleantext)
                         post=replace_tag(post,'<!--|||||article_category|||||-->',category)
                         post=replace_tag(post,'<!--|||||article_category_encoded|||||-->',quote(category))
                         post=replace_tag(post,'<!--|||||article_title|||||-->',title)
                         post=replace_tag(post,'<!--|||||article_post|||||-->',post_content)
-                        post=replace_all_components(post)
                         truncated_title=truncate(title)
                         url=replace_all_components(quote(os.path.join('/',category,truncated_title)+'/').replace('//','/').lower())
                         post=replace_tag(post,'<!--|||||link_url|||||-->',url)
                         post=replace_tag(post,'<!--|||||full_url|||||-->',base_url+url)
+                        post=replace_all_components(post)
                         hash_value.update(post.encode())
                         if url not in content_database or content_database[url]['hash_value']!=hash_value.hexdigest():
                             make_directory(truncated_title)
@@ -189,6 +191,7 @@ def generate_pages(directory:str,website_directory:str):
                 cleantext=remove_double_newline_and_truncate(BeautifulSoup(post_content,'lxml').text)
                 title=page[:-len('.html')]
                 post=page_template
+                post=replace_all_components(post)
                 post=replace_tag(post,'<!--|||||description|||||-->',cleantext)
                 post=replace_tag(post,'<!--|||||page_title|||||-->',title)
                 post=replace_tag(post,'<!--|||||page_post|||||-->',post_content)
@@ -227,13 +230,14 @@ def generate_categories(website_directory:str):
     os.chdir('category')
     for category in category_database:
         post=category_template
+        post=replace_all_components(post)
         post=replace_tag(post,'<!--|||||category|||||-->',category)
         post=replace_tag(post,'<!--|||||description|||||-->','「'+category+'」系列所有文章列表 - 大陸居民臺灣正體字講義')
-        post=replace_all_components(post)
         url=replace_all_components(quote(os.path.join('/',category)+'/').replace('//','/').lower())
         post=replace_tag(post,'<!--|||||link_url|||||-->',url)
         post=replace_tag(post,'<!--|||||full_url|||||-->',base_url+url)
         post=replace_tag(post,'<!--|||||next_url|||||-->',url+'?page=2')
+        post=replace_all_components(post)
         hash_value.update(post.encode())
         if url not in content_database or content_database[url]['hash_value']!=hash_value.hexdigest():
             make_directory(category)
@@ -252,12 +256,13 @@ def generate_search(website_directory:str):
     make_directory('search')
     os.chdir('search')
     post=search_template
-    post=replace_tag(post,'<!--|||||description|||||-->','搜索 - 大陸居民臺灣正體字講義')
     post=replace_all_components(post)
+    post=replace_tag(post,'<!--|||||description|||||-->','搜索 - 大陸居民臺灣正體字講義')
     url='/search/'
     post=replace_tag(post,'<!--|||||link_url|||||-->',url)
     post=replace_tag(post,'<!--|||||full_url|||||-->',base_url+url)
     post=replace_tag(post,'<!--|||||next_url|||||-->',url+'?page=2')
+    post=replace_all_components(post)
     hash_value.update(post.encode())
     if url not in content_database or content_database[url]['hash_value']!=hash_value.hexdigest():
         with open(os.path.join('./index.html'),mode='w',encoding='utf-8') as file:
@@ -273,8 +278,8 @@ def generate_404(website_directory:str):
         template_404=file.read()
     os.chdir(website_directory)
     post=template_404
-    post=replace_tag(post,'<!--|||||description|||||-->','找不到符合條件的頁面 – 大陸居民臺灣正體字講義')
     post=replace_all_components(post)
+    post=replace_tag(post,'<!--|||||description|||||-->','找不到符合條件的頁面 – 大陸居民臺灣正體字講義')
     url='/404.html'
     post=replace_tag(post,'<!--|||||link_url|||||-->',url)
     post=replace_tag(post,'<!--|||||full_url|||||-->',base_url+url)
