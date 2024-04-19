@@ -318,11 +318,9 @@ def main(website_directory:str='./NTCCTMCR/',
          entries_filepath:str='../import.csv',
          articles_directory:str='../WordPress/articles',
          pages_directory:str='../WordPress/pages',
-         domain_name_str:str='www.zh-tw.top',
          base_url_str:str='https://static.zh-tw.top',
          filename_length_limit_str:int=22):
-    global domain_name,base_url,filename_length_limit
-    domain_name=domain_name_str
+    global base_url,filename_length_limit
     base_url=base_url_str
     filename_length_limit=int(filename_length_limit_str)
     original_directory=os.getcwd()
