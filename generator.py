@@ -1,7 +1,6 @@
 import os,csv,hashlib,pickle,json
 from bs4 import BeautifulSoup
 from urllib.parse import quote
-import pandas as pd
 hash_value=hashlib.new('sha256')
 content_database={}
 category_database={}
@@ -293,8 +292,10 @@ def generate_sitemap(website_directory:str):
     global content_database
     original_directory=os.getcwd()
     urls=[base_url+url for url in content_database.keys()]
-    df=pd.DataFrame(urls,columns=['URL'])
-    xml_data=df.to_xml(root_name='urlset',row_name="url",xml_declaration=True)
+    xml_data="""<?xml version='1.0' encoding='UTF-8'?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">"""
+    for url in urls:
+        xml_data+='<url><loc>'+base_url+url+'</loc></url>'
+    xml_data+='</urlset>'
     os.chdir(website_directory)
     with open('./sitemap.xml',mode='w',encoding='utf-8') as file:
         file.write(xml_data)
