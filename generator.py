@@ -51,6 +51,12 @@ def replace_all_components(article:str):
 def remove_double_newline_and_truncate(article:str):
     while -1!=article.find('\n\n'):
         article=article.replace('\n\n','\n')
+    while -1!=article.find('\n '):
+        article=article.replace('\n ','\n')
+    while -1!=article.find(' \n'):
+        article=article.replace(' \n','\n')
+    while -1!=article.find('  '):
+        article=article.replace('  ',' ')
     return article.strip()
 def truncate(title:str):
     global filename_length_limit
@@ -78,9 +84,11 @@ def generate_entries(filepath:str,website_directory:str):
             excerpt_index=row.index('excerpt')
             category_index=row.index('category')
         else:
+            cleantext=remove_double_newline_and_truncate(BeautifulSoup(row[content_index],'lxml').text)
             article=article_template
             article=replace_all_components(article)
-            article=replace_tag(article,'<!--|||||description|||||-->',row[excerpt_index])
+            # article=replace_tag(article,'<!--|||||description|||||-->',row[excerpt_index])
+            article=replace_tag(article,'<!--|||||description|||||-->',cleantext)
             article=replace_tag(article,'<!--|||||article_category|||||-->',row[category_index])
             article=replace_tag(article,'<!--|||||article_category_encoded|||||-->',quote(row[category_index]))
             article=replace_tag(article,'<!--|||||article_title|||||-->',row[title_index])
@@ -98,7 +106,8 @@ def generate_entries(filepath:str,website_directory:str):
                 content_database[url]={'type':'article',
                                        'category':row[category_index],
                                        'title':row[title_index],
-                                       'description':row[excerpt_index],
+                                       'description':cleantext,
+                                    #    'description':row[excerpt_index],
                                        'hash_value':hash_value.hexdigest()}
             if row[category_index] not in category_database:
                 category_database[row[category_index]]=[]
