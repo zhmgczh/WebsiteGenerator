@@ -1,3 +1,44 @@
 <script>
-    
+    function request_json(url, process) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function () {
+            if (4 === xhr.readyState && 200 === xhr.status) {
+                const data = JSON.parse(xhr.responseText);
+                process(data);
+            } else if (4 === xhr.readyState) {
+                console.error('Failed to load JSON.');
+            }
+        };
+        xhr.send();
+    }
+    function select_category(data, tag, page) {
+        var keys = Object.keys(data[tag]);
+        var container = document.getElementById('posts');
+        var article_post_sample = document.getElementById('article_post_sample');
+        elements = []
+        for (var i = 0; i < n; ++i) {
+            var new_element = article_post_sample.outerHTML.replace(' id="article_post_sample" style="display:none;"', '');
+            new_element = new_element.replace('|||||category|||||', tag);
+            new_element = new_element.replace('|||||quote_category|||||', encodeURIComponent(tag)).toLowerCase();
+            new_element = new_element.replace('|||||url|||||', data[tag][i]['url']);
+            new_element = new_element.replace('|||||original_url|||||', '<!--|||||main_base_url|||||-->'+data[tag][i]['url']);
+            new_element = new_element.replace('|||||title|||||', data[tag][i]['title']);
+            var description = data[tag][indices[i]]['description'];
+            if (100 < description.length) {
+                description = description.substr(0, 100) + '…';
+            }
+            new_element = new_element.replace('|||||description|||||', description)
+            elements[i] = new_element;
+        }
+        elements[n] = yijianduofanbianxi_sample.outerHTML;
+        if (n <= 2) {
+            yijianduofanbianxi_container.setAttribute('class', 'is-grid o-posts-grid-columns-' + n.toString());
+        }
+        else {
+            yijianduofanbianxi_container.setAttribute('class', 'is-grid o-posts-grid-columns-3');
+        }
+        yijianduofanbianxi_container.innerHTML = elements.join('\n');
+    }
+    request_json('category_database.js', (data) => select_category(data, '一簡多繁辨析', 6))
 </script>

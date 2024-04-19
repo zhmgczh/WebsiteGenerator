@@ -555,7 +555,7 @@
 				<div class="archive-header">
 					<div class="group archive-header-inner">
 						<h1 class="archive-title">分類: <span><!--|||||category|||||--></span></h1>
-						<p class="archive-subtitle">頁次 1<span class="sep">/</span>55</p>
+						<p class="archive-subtitle">頁次 <span id="current_page_index">1</span><span class="sep">/</span><span id="total_page_number">55</span></p>
 					</div><!-- .group -->
 				</div><!-- .archive-header -->
 				<div class="posts" id="posts">
@@ -739,24 +739,87 @@
 							</p>
 						</header><!-- .post-header -->
 					</article><!-- .post -->
+					<article id="article_post_sample" style="display:none;"
+						class="post post-21279 type-post status-publish format-standard hentry category-18">
+						<header class="post-header">
+							<p class="post-categories"><a
+									href="/category/|||||quote_category|||||/"
+									rel="category tag">|||||category|||||</a></p>
+							<h2 class="post-title">
+								<a href="|||||url|||||">|||||title|||||</a>
+							</h2>
+							<p class="post-meta">
+								<a name="count_comments" href="|||||original_url|||||#disqus_thread" style="display:none;">查看留言</a>
+								— <a name="display_comments" href="|||||url|||||#disqus_thread">查看留言</a>
+								<script>
+									var script_tag=document.getElementsByTagName('script');
+									script_tag=script_tag[script_tag.length-1];
+									var parent=script_tag.parentNode;
+									var count_comments=parent.getElementsByTagName('a')[0];
+									var display_comments=parent.getElementsByTagName('a')[1];
+									function check(count_comments,display_comments)
+									{
+										if('查看留言'!=count_comments.innerHTML)
+										{
+											display_comments.innerHTML=count_comments.innerHTML;
+										}
+										else
+										{
+											setTimeout(()=>check(count_comments,display_comments),200);
+										}
+									}
+									check(count_comments,display_comments);
+								</script>
+							</p>
+						</header><!-- .post-header -->
+					</article><!-- .post -->
+					<article id="page_post_sample" style="display:none;" class="post post-230 page type-page status-publish hentry">
+						<header class="post-header">
+							<h2 class="post-title">
+								<a href="|||||url|||||">|||||title|||||</a>
+							</h2>
+							<p class="post-meta">
+								<a name="count_comments" href="|||||original_url|||||#disqus_thread" style="display:none;">查看留言</a>
+								— <a name="display_comments" href="|||||url|||||#disqus_thread">查看留言</a>
+								<script>
+									var script_tag=document.getElementsByTagName('script');
+									script_tag=script_tag[script_tag.length-1];
+									var parent=script_tag.parentNode;
+									var count_comments=parent.getElementsByTagName('a')[0];
+									var display_comments=parent.getElementsByTagName('a')[1];
+									function check(count_comments,display_comments)
+									{
+										if('查看留言'!=count_comments.innerHTML)
+										{
+											display_comments.innerHTML=count_comments.innerHTML;
+										}
+										else
+										{
+											setTimeout(()=>check(count_comments,display_comments),200);
+										}
+									}
+									check(count_comments,display_comments);
+								</script>
+							</p>
+						</header><!-- .post-header -->
+					</article><!-- .post -->
 				</div><!-- .posts -->
-				<div class="archive-nav">
+				<div id="page_navigation" class="archive-nav">
 					<li class="number active"><a
-							href="<!--|||||main_base_url|||||-->category/%e4%b8%80%e7%b0%a1%e5%a4%9a%e7%b9%81%e8%be%a8%e6%9e%90/">1</a>
+							href="./">1</a>
 					</li>
 					<li class="number"><a
-							href="<!--|||||main_base_url|||||-->category/%e4%b8%80%e7%b0%a1%e5%a4%9a%e7%b9%81%e8%be%a8%e6%9e%90/page/2/">2</a>
+							href="./?page=2">2</a>
 					</li>
 					<li class="number"><a
-							href="<!--|||||main_base_url|||||-->category/%e4%b8%80%e7%b0%a1%e5%a4%9a%e7%b9%81%e8%be%a8%e6%9e%90/page/3/">3</a>
+							href="./?page=3">3</a>
 					</li>
 					<li class="number">...</li>
 					<li class="number"><a
-							href="<!--|||||main_base_url|||||-->category/%e4%b8%80%e7%b0%a1%e5%a4%9a%e7%b9%81%e8%be%a8%e6%9e%90/page/55/">55</a>
+							href="./?page=55">55</a>
 					</li>
 					<li class="archive-nav-older"><a
-							href="<!--|||||main_base_url|||||-->category/%e4%b8%80%e7%b0%a1%e5%a4%9a%e7%b9%81%e8%be%a8%e6%9e%90/page/2/">往後
-							→</a></li>
+							href="./?page=2">往後 →</a></li>
 					<div class="clear"></div>
 				</div><!-- .archive-nav -->
 				<!--|||||category_script|||||-->
