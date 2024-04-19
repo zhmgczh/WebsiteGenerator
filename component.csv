@@ -18,10 +18,14 @@ component_id,component_file
 <!--|||||article_number_comments|||||-->,article_number_comments.html
 <!--|||||article_post|||||-->,
 <!--|||||article_related|||||-->,article_related.html
+<!--|||||category|||||-->,
+<!--|||||category_script|||||-->,category_script.html
+<!--|||||search_script|||||-->,search_script.html
 <!--|||||respond|||||-->,respond.html
 <!--|||||sidebar|||||-->,sidebar.html
 <!--|||||footer|||||-->,footer.html
 <!--|||||before_closing_body|||||-->,before_closing_body.html
+"<!-- wp:search {""label"":"""",""placeholder"":""請輸入要查詢的漢字"",""buttonText"":""搜尋"",""buttonUseIcon"":true} /-->",search_index.html
 "<!-- wp:themeisle-blocks/posts-grid {""id"":""wp-block-themeisle-blocks-posts-grid-244696c1"",""categories"":[{""id"":18,""name"":""一簡多繁辨析"",""slug"":""%e4%b8%80%e7%b0%a1%e5%a4%9a%e7%b9%81%e8%be%a8%e6%9e%90""}],""postsToShow"":6,""displayDate"":false,""displayAuthor"":false,""textColor"":""#111"",""className"":""""} /-->",一簡多繁辨析_list.html
 "<!-- wp:themeisle-blocks/posts-grid {""id"":""wp-block-themeisle-blocks-posts-grid-d7e09aeb"",""categories"":[{""id"":19,""name"":""漢字趣談"",""slug"":""%e6%bc%a2%e5%ad%97%e8%b6%a3%e8%ab%87""}],""postsToShow"":6,""displayDate"":false,""displayAuthor"":false,""textColor"":""#111"",""className"":""""} /-->",漢字趣談_list.html
 "<!-- wp:themeisle-blocks/leaflet-map {""id"":""wp-block-themeisle-blocks-leaflet-map-c4bad13f"",""latitude"":""34.052232743961376"",""longitude"":""-118.24364483356477"",""bbox"":""-118.25687885284424,34.04512113757758,-118.23044300079347,34.05934375383547"",""zoom"":15} /-->",address_map.html

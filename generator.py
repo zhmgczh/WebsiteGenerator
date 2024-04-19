@@ -1,6 +1,7 @@
 import os,csv,hashlib,pickle,json
 from bs4 import BeautifulSoup
 from urllib.parse import quote
+import pandas as pd
 hash_value=hashlib.new('sha256')
 content_database={}
 category_database={}
@@ -86,11 +87,11 @@ def generate_entries(filepath:str,website_directory:str):
             article=replace_tag(article,'<!--|||||article_post|||||-->',row[content_index])
             article=replace_all_components(article)
             title=truncate(row[title_index])
-            url=quote(os.path.join('/',row[category_index],title)+'/')
+            url=quote(os.path.join('/',row[category_index],title)+'/').replace('//','/')
             article=replace_tag(article,'<!--|||||link_url|||||-->',url)
             article=replace_tag(article,'<!--|||||full_url|||||-->',base_url+url)
             hash_value.update(article.encode())
-            if url not in content_database or content_database[url]!=hash_value.hexdigest():
+            if url not in content_database or content_database[url]['hash_value']!=hash_value.hexdigest():
                 make_directory(title)
                 with open(os.path.join('./',title,'index.html'),mode='w',encoding='utf-8') as file:
                     file.write(article)
@@ -131,11 +132,11 @@ def generate_articles(directory:str,website_directory:str):
                         post=replace_tag(post,'<!--|||||article_post|||||-->',post_content)
                         post=replace_all_components(post)
                         truncated_title=truncate(title)
-                        url=quote(os.path.join('/',category,truncated_title)+'/')
+                        url=quote(os.path.join('/',category,truncated_title)+'/').replace('//','/')
                         post=replace_tag(post,'<!--|||||link_url|||||-->',url)
                         post=replace_tag(post,'<!--|||||full_url|||||-->',base_url+url)
                         hash_value.update(post.encode())
-                        if url not in content_database or content_database[url]!=hash_value.hexdigest():
+                        if url not in content_database or content_database[url]['hash_value']!=hash_value.hexdigest():
                             make_directory(truncated_title)
                             with open(os.path.join('./',truncated_title,'index.html'),mode='w',encoding='utf-8') as file:
                                 file.write(post)
@@ -151,8 +152,6 @@ def generate_articles(directory:str,website_directory:str):
                                                             'description':cleantext})
             os.chdir('..')
     os.chdir(original_directory)
-def generate_categories(website_directory:str):
-    pass
 def generate_pages(directory:str,website_directory:str):
     global content_database
     original_directory=os.getcwd()
@@ -209,7 +208,7 @@ def generate_pages(directory:str,website_directory:str):
                 post=replace_tag(post,'<!--|||||link_url|||||-->',url)
                 post=replace_tag(post,'<!--|||||full_url|||||-->',base_url+url)
                 hash_value.update(post.encode())
-                if url not in content_database or content_database[url]!=hash_value.hexdigest():
+                if url not in content_database or content_database[url]['hash_value']!=hash_value.hexdigest():
                     if ''!=truncated_title:
                         make_directory(truncated_title)
                     with open(os.path.join('./',truncated_title,'index.html'),mode='w',encoding='utf-8') as file:
@@ -219,16 +218,93 @@ def generate_pages(directory:str,website_directory:str):
                                            'description':cleantext,
                                            'hash_value':hash_value.hexdigest()}
     os.chdir(original_directory)
+def generate_categories(website_directory:str):
+    global category_database
+    original_directory=os.getcwd()
+    with open('./category.html',mode='r',encoding='utf-8') as file:
+        category_template=file.read()
+    os.chdir(website_directory)
+    make_directory('category')
+    os.chdir('category')
+    for category in category_database:
+        post=category_template
+        post=replace_tag(post,'<!--|||||category|||||-->',category)
+        post=replace_tag(post,'<!--|||||description|||||-->','「'+category+'」系列所有文章列表 - 大陸居民臺灣正體字講義')
+        post=replace_all_components(post)
+        url=quote(os.path.join('/',category)+'/').replace('//','/')
+        post=replace_tag(post,'<!--|||||link_url|||||-->',url)
+        post=replace_tag(post,'<!--|||||full_url|||||-->',base_url+url)
+        post=replace_tag(post,'<!--|||||next_url|||||-->',url+'?page=2')
+        hash_value.update(post.encode())
+        if url not in content_database or content_database[url]['hash_value']!=hash_value.hexdigest():
+            make_directory(category)
+            with open(os.path.join('./',category,'index.html'),mode='w',encoding='utf-8') as file:
+                file.write(post)
+            content_database[url]={'type':'category',
+                                   'title':category,
+                                   'description':'「'+category+'」系列所有文章列表 - 大陸居民臺灣正體字講義',
+                                   'hash_value':hash_value.hexdigest()}
+    os.chdir(original_directory)
+def generate_search(website_directory:str):
+    original_directory=os.getcwd()
+    with open('./search.html',mode='r',encoding='utf-8') as file:
+        search_template=file.read()
+    os.chdir(website_directory)
+    make_directory('search')
+    os.chdir('search')
+    post=search_template
+    post=replace_tag(post,'<!--|||||description|||||-->','搜索 - 大陸居民臺灣正體字講義')
+    post=replace_all_components(post)
+    url='/search/'
+    post=replace_tag(post,'<!--|||||link_url|||||-->',url)
+    post=replace_tag(post,'<!--|||||full_url|||||-->',base_url+url)
+    post=replace_tag(post,'<!--|||||next_url|||||-->',url+'?page=2')
+    hash_value.update(post.encode())
+    if url not in content_database or content_database[url]['hash_value']!=hash_value.hexdigest():
+        with open(os.path.join('./index.html'),mode='w',encoding='utf-8') as file:
+            file.write(post)
+        content_database[url]={'type':'search',
+                               'title':'搜索 - 大陸居民臺灣正體字講義',
+                               'description':'搜索 - 大陸居民臺灣正體字講義',
+                               'hash_value':hash_value.hexdigest()}
+    os.chdir(original_directory)
 def generate_404(website_directory:str):
-    pass
+    original_directory=os.getcwd()
+    with open('./404.html',mode='r',encoding='utf-8') as file:
+        template_404=file.read()
+    os.chdir(website_directory)
+    post=template_404
+    post=replace_tag(post,'<!--|||||description|||||-->','找不到符合條件的頁面 – 大陸居民臺灣正體字講義')
+    post=replace_all_components(post)
+    url='/404.html'
+    post=replace_tag(post,'<!--|||||link_url|||||-->',url)
+    post=replace_tag(post,'<!--|||||full_url|||||-->',base_url+url)
+    post=replace_tag(post,'<!--|||||next_url|||||-->',url+'?page=2')
+    hash_value.update(post.encode())
+    if url not in content_database or content_database[url]['hash_value']!=hash_value.hexdigest():
+        with open(os.path.join('./404.html'),mode='w',encoding='utf-8') as file:
+            file.write(post)
+        content_database[url]={'type':'404',
+                               'title':'找不到符合條件的頁面 – 大陸居民臺灣正體字講義',
+                               'description':'找不到符合條件的頁面 – 大陸居民臺灣正體字講義',
+                               'hash_value':hash_value.hexdigest()}
+    os.chdir(original_directory)
 def generate_sitemap(website_directory:str):
-    pass
+    global content_database
+    original_directory=os.getcwd()
+    urls=[base_url+url for url in content_database.keys()]
+    df=pd.DataFrame(urls,columns=['URL'])
+    xml_data=df.to_xml(root_name='urlset',row_name="url",xml_declaration=True)
+    os.chdir(website_directory)
+    with open('./sitemap.xml',mode='w',encoding='utf-8') as file:
+        file.write(xml_data)
+    os.chdir(original_directory)
 def main(website_directory:str='./NTCCTMCR/',
          entries_filepath:str='../import.csv',
          articles_directory:str='../WordPress/articles',
          pages_directory:str='../WordPress/pages',
          domain_name_str:str='www.zh-tw.top',
-         base_url_str:str='http://static.zh-tw.top',
+         base_url_str:str='https://static.zh-tw.top',
          filename_length_limit_str:int=22):
     global domain_name,base_url,filename_length_limit
     domain_name=domain_name_str
@@ -242,6 +318,7 @@ def main(website_directory:str='./NTCCTMCR/',
     generate_articles(articles_directory,website_directory)
     generate_categories(website_directory)
     generate_pages(pages_directory,website_directory)
+    generate_search(website_directory)
     generate_404(website_directory)
     generate_sitemap(website_directory)
     write_content_database(website_directory)
