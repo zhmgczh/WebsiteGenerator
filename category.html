@@ -761,7 +761,7 @@
 									{
 										if('查看留言'!=count_comments.innerHTML)
 										{
-											display_comments.innerHTML=count_comments.innerHTML;
+											display_comments.innerHTML=display_comments.replace('查看留言',count_comments.innerHTML);
 										}
 										else
 										{
@@ -791,7 +791,7 @@
 									{
 										if('查看留言'!=count_comments.innerHTML)
 										{
-											display_comments.innerHTML=count_comments.innerHTML;
+											display_comments.innerHTML=display_comments.replace('查看留言',count_comments.innerHTML);
 										}
 										else
 										{
@@ -805,22 +805,37 @@
 					</article><!-- .post -->
 				</div><!-- .posts -->
 				<div id="page_navigation" class="archive-nav">
-					<li class="number active"><a
-							href="./">1</a>
+					<li class="number active">
+						<a href="./">1</a>
 					</li>
-					<li class="number"><a
-							href="./?page=2">2</a>
+					<li class="number">
+						<a href="./?page=2">2</a>
 					</li>
-					<li class="number"><a
-							href="./?page=3">3</a>
+					<li class="number">
+						<a href="./?page=3">3</a>
 					</li>
 					<li class="number">...</li>
-					<li class="number"><a
-							href="./?page=55">55</a>
+					<li class="number">
+						<a href="./?page=55">55</a>
 					</li>
-					<li class="archive-nav-older"><a
-							href="./?page=2">往後 →</a></li>
+					<li class="archive-nav-older">
+						<a href="./?page=2">往後 →</a>
+					</li>
 					<div class="clear"></div>
+					<li class="archive-nav-newer" id="page_navigation_newer" style="display:none;">
+						<a href="./?page=|||||page_index|||||">← 返前</a>
+					</li>
+					<li class="archive-nav-older" id="page_navigation_older" style="display:none;">
+						<a href="./?page=|||||page_index|||||">往後 →</a>
+					</li>
+					<li class="number" id="page_navigation_dots" style="display:none;">...</li>
+					<li class="number" id="page_navigation_number" style="display:none;">
+						<a href="./?page=|||||page_index|||||">|||||page_index|||||</a>
+					</li>
+					<li class="number active" id="page_navigation_number_active" style="display:none;">
+						<a href="./?page=|||||page_index|||||">|||||page_index|||||</a>
+					</li>
+					<div class="clear" id="page_navigation_clear" style="display:none;"></div>
 				</div><!-- .archive-nav -->
 				<!--|||||category_script|||||-->
 			</div><!-- .content -->
