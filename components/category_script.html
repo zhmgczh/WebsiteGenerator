@@ -52,6 +52,10 @@
         }
         if (page < total_pages) {
             elements[index++] = page_navigation_older.outerHTML.replaceAll(' id="page_navigation_older" style="display:none;"', '').replaceAll('|||||page_index|||||', page + 1);
+            document.getElementById('next_url').setAttribute('href', window.location.href.split('?')[0] + 'page=' + (page + 1).toString());
+        }
+        else {
+            document.getElementById('next_url').setAttribute('href', window.location.href.split('?')[0]);
         }
         elements[index++] = page_navigation_newer.outerHTML;
         elements[index++] = page_navigation_older.outerHTML;
@@ -118,6 +122,7 @@
     }
     page = parseInt(page);
     var pure_title = document.title;
+    document.getElementById('current_url').setAttribute('href', window.location.href);
     request_json('/category_database.js', (data) => select_category(data, '<!--|||||category|||||-->', page))
 </script>
 <p></p>
