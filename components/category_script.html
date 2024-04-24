@@ -26,6 +26,15 @@
         var index = 0;
         if (1 < page) {
             elements[index++] = page_navigation_newer.outerHTML.replaceAll(' id="page_navigation_newer" style="display:none;"', '').replaceAll('|||||page_index|||||', page - 1);
+            document.getElementById('prev_url').setAttribute('href', window.location.href.split('?')[0] + '?page=' + (page - 1).toString());
+        }
+        else {
+            if (1 < total_pages) {
+                document.getElementById('prev_url').setAttribute('href', window.location.href.split('?')[0] + '?page=' + total_pages.toString());
+            }
+            else {
+                document.getElementById('prev_url').setAttribute('href', window.location.href.split('?')[0]);
+            }
         }
         if (1 < left) {
             elements[index++] = page_navigation_number.outerHTML.replaceAll(' id="page_navigation_number" style="display:none;"', '').replaceAll('|||||page_index|||||', 1).replaceAll('?page=1', '');
