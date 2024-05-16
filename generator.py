@@ -242,7 +242,7 @@ def generate_categories(website_directory:str):
         post=replace_all_components(post)
         post=replace_tag(post,'<!--|||||category|||||-->',category)
         post=replace_tag(post,'<!--|||||description|||||-->','「'+category+'」系列所有文章列表 - 大陸居民臺灣正體字講義')
-        url=replace_all_components(quote(os.path.join('/',category)+'/').replace('//','/').lower())
+        url=replace_all_components(quote(os.path.join('/category/',category)+'/').replace('//','/').lower())
         post=replace_tag(post,'<!--|||||link_url|||||-->',url)
         post=replace_tag(post,'<!--|||||full_url|||||-->',base_url+url)
         post=replace_tag(post,'<!--|||||next_url|||||-->',url+'?page=2')
