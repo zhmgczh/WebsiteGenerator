@@ -83,6 +83,11 @@
   src: url("../fonts/中易宋体.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
+  text-shadow:
+  0.03em 0 currentColor,
+ -0.03em 0 currentColor,
+  0 0.03em currentColor,
+  0 -0.03em currentColor;
 }
 
 @font-face {
@@ -104,6 +109,11 @@
   src: url("../fonts/eduSong_Unicode.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
+  text-shadow:
+  0.03em 0 currentColor,
+ -0.03em 0 currentColor,
+  0 0.03em currentColor,
+  0 -0.03em currentColor;
 }
 
 @font-face {
