@@ -17,9 +17,6 @@ def main(port: int = 8000, address: str = "./NTCCTMCR/"):
 
 
 if "__main__" == __name__:
-    if 3 == len(sys.argv):
-        main(int(sys.argv[1]), sys.argv[2])
-    elif 2 == len(sys.argv):
-        main(int(sys.argv[1]))
-    else:
-        main()
+    import fire
+
+    fire.Fire(main)
